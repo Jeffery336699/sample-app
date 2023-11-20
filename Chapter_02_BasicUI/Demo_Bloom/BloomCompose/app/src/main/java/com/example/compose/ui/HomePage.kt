@@ -234,7 +234,7 @@ fun DesignCard(plant: ImageItem) {
                     modifier = Modifier
                         .padding(top = 24.dp)
                         .size(24.dp),
-                    checked = false,
+                    checked = plant.name == "Aglaonema",
                     onCheckedChange = {
                         // plant.enable = it
                     },

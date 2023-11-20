@@ -15,10 +15,9 @@
  */
 package com.example.compose
 
-import android.os.Build
+import Layout_UI.ConstraintLayoutDemo
 import android.os.Bundle
 import androidx.activity.compose.setContent
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -37,7 +36,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WelcomePage()
+            // WelcomePage()
+            // LoginPage()
+            // HomePage()
+            // SubcompositionDemo()
+            ConstraintLayoutDemo()
         }
     }
 }
