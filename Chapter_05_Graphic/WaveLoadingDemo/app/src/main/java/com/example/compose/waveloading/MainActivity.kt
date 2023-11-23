@@ -34,7 +34,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            WaveLoadingDemo()
+            // WaveLoadingDemo()
+            // DrawBehind()
+            DrawFuwa()
         }
     }
 }
@@ -91,8 +93,6 @@ fun WaveLoadingDemo() {
                 range = 0f..1f
             )
         }
-
-
     }
 }
 

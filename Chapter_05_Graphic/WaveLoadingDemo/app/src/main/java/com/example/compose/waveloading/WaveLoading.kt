@@ -31,7 +31,7 @@ import kotlin.math.min
 import kotlin.math.roundToInt
 import kotlin.math.sin
 
-
+/** 振幅 */
 private const val defaultAmlitude = 0.2f
 private const val defaultVelocity = 1.0f
 private const val waveDuration = 2000
@@ -64,18 +64,18 @@ fun WaveLoading(
     Canvas(modifier.fillMaxSize()) {
 
         // 方式一 ：使用 DrawScope API
-        drawWave(
-            bitmap.asImageBitmap(),
-            waveConfig,
-            animates
-        )
+        // drawWave(
+        //     bitmap.asImageBitmap(),
+        //     waveConfig,
+        //     animates
+        // )
 
         // 方式二：使用 Canvas API
-//        drawWaveWithCanvas(
-//            bitmap,
-//            waveConfig,
-//            animates
-//        )
+       drawWaveWithCanvas(
+           bitmap,
+           waveConfig,
+           animates
+       )
     }
 
 }
@@ -109,7 +109,6 @@ private fun DrawScope.drawWave(
                 }), alpha = if (index == 0) 1f else 0.5f
             )
         }
-
     }
 
 }
