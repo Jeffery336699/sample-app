@@ -1,6 +1,5 @@
-package com.example.compose.shimmer.ui
+package com.example.compose.shimmer
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,7 +11,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 val barHeight = 10.dp
@@ -24,7 +22,6 @@ val shimmerColors = listOf(
     Color.LightGray.copy(alpha = 0.6f),
 )
 
-@Preview(showBackground = true)
 @Composable
 fun AnimatedShimmerItem() {
     val transition = rememberInfiniteTransition()
@@ -50,7 +47,6 @@ fun AnimatedShimmerItem() {
 }
 
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun ShimmerItem(
     brush: Brush = Brush.linearGradient(
@@ -112,17 +108,4 @@ fun ShimmerItem(
             Spacer(modifier = Modifier.padding(spacerPadding))
         }
     }
-
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun ListPreview() {
-    Column(Modifier.padding(5.dp)) {
-        repeat(3) {
-            ShimmerItem()
-        }
-    }
-
 }

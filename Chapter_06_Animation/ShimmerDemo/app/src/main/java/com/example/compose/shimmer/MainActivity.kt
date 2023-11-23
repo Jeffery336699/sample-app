@@ -8,7 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
-import com.example.compose.shimmer.ui.AnimatedShimmerItem
+import com.example.compose.shimmer.AnimatedShimmerItem
 import com.example.compose.shimmer.ui.theme.ShimmerDemoTheme
 
 class MainActivity : ComponentActivity() {
