@@ -1,5 +1,6 @@
 package com.example.compose.favbutton
 
+import android.util.Log
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.SizeTransform
@@ -56,7 +57,7 @@ enum class ButtonState(val ui: UiState) {
 }
 
 const val animateDuration = 3000
-
+const val TAG = "FavButton"
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -71,7 +72,7 @@ fun AnimatedFavButton(modifier: Modifier = Modifier) {
                             tween(durationMillis = animateDuration)
                         }
             }) { state ->
-
+            Log.i(TAG, "state: ${state.name}")
             FavButton(buttonState = state) {
                 buttonState =
                     if (buttonState == ButtonState.Idle) ButtonState.Pressed
@@ -158,7 +159,6 @@ fun FavButton(
 }
 
 
-@Preview
 @Composable
 fun PreviewButton() {
     FavButtonDemoTheme {
