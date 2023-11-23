@@ -16,6 +16,9 @@
 package com.example.compose
 
 import CounterComponent
+import Custom_Layout.IntrinsicDemo
+import Custom_Layout.IntrinsicRow
+import Custom_Layout.SubcompositionDemo
 import Layout_UI.ConstraintLayoutDemo
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -42,7 +45,9 @@ class MainActivity : AppCompatActivity() {
             // HomePage()
             // SubcompositionDemo()
             // ConstraintLayoutDemo()
-            CounterComponent()
+            // CounterComponent()
+            // IntrinsicDemo()
+            SubcompositionDemo()
         }
     }
 }

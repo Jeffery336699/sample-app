@@ -1,6 +1,8 @@
 package Custom_Layout
 
 
+import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Divider
 import androidx.compose.material.Text
@@ -13,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.dp
 
+const val TAG = "Intrinsic"
 
 @Composable
 fun IntrinsicRow(modifier: Modifier, content: @Composable () -> Unit){
@@ -24,14 +27,17 @@ fun IntrinsicRow(modifier: Modifier, content: @Composable () -> Unit){
                 measurables: List<Measurable>,
                 constraints: Constraints
             ): MeasureResult {
-                var devideConstraints = constraints.copy(minWidth = 0)
-                var mainPlaceables = measurables.filter {
+                Log.e(TAG, "MeasureScope.measure") // TODO: ②
+                val devideConstraints = constraints.copy(minWidth = 0)
+                val mainPlaceables = measurables.filter {
                     it.layoutId == "main"
                 }.map {
                     it.measure(constraints)
                 }
-                var devidePlaceable = measurables.first { it.layoutId == "devider"}.measure(devideConstraints)
-                var midPos = constraints.maxWidth / 2
+                val devidePlaceable = measurables.first { it.layoutId == "devider"}.measure(devideConstraints)
+                val midPos = constraints.maxWidth / 2
+                Log.i(TAG, "constraints.maxWidth: ${constraints.maxWidth}") // 1080
+                Log.i(TAG, "constraints.maxHeight: ${constraints.maxHeight}") // 52
                 return layout(constraints.maxWidth, constraints.maxHeight) {
                     mainPlaceables.forEach {
                         it.placeRelative(0, 0)
@@ -44,6 +50,7 @@ fun IntrinsicRow(modifier: Modifier, content: @Composable () -> Unit){
                 measurables: List<IntrinsicMeasurable>,
                 width: Int
             ): Int {
+                Log.e(TAG, "IntrinsicMeasureScope.minIntrinsicHeight") // TODO: ①
                 var maxHeight = 0
                 measurables.forEach {
                     maxHeight = it.minIntrinsicHeight(width).coerceAtLeast(maxHeight)
@@ -62,6 +69,7 @@ fun IntrinsicDemo() {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(IntrinsicSize.Min)
+                .background(Color(0x66c16712))
         ) {
             Text(text = "Left",
                 Modifier
