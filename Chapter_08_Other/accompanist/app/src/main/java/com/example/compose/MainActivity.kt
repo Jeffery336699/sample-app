@@ -19,6 +19,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.compose.flowLayoutDemo.FlowLayoutDemo
 import com.example.compose.insetsDemo.InsetsDemo
+import com.example.compose.other.CoilDemo
+import com.example.compose.other.LottieDemo
 import com.example.compose.pagerDemo.PagerDemo
 import com.example.compose.swipeRefreshDemo.SwipeRefreshDemo
 import com.example.compose.systemUiController.SystemUiControllerDemo
@@ -50,6 +52,12 @@ class MainActivity : ComponentActivity() {
                         }
                         composable(Demo.insetsDemo) {
                             InsetsDemo()
+                        }
+                        composable(Demo.coilDemo) {
+                            CoilDemo()
+                        }
+                        composable(Demo.lottieDemo) {
+                            LottieDemo()
                         }
                     }
                 }
@@ -91,6 +99,20 @@ fun Enter(navController: NavController) {
         ) {
             Text("insets Demo")
         }
+
+        Button(
+            onClick = { navController.navigate(Demo.coilDemo) }
+        ) {
+            Text("coil Demo")
+        }
+
+        Button(
+            onClick = { navController.navigate(Demo.lottieDemo) }
+        ) {
+            Text("lottie Demo")
+        }
+
+
     }
 }
 
@@ -101,4 +123,6 @@ object Demo {
     const val systemUiControllerDemo = "systemUiControllerDemo"
     const val flowLayoutDemo = "flowLayoutDemo"
     const val insetsDemo = "insetsDemo"
+    const val coilDemo = "coilDemo"
+    const val lottieDemo = "lottieDemo"
 }

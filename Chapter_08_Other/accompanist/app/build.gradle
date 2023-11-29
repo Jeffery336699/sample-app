@@ -75,4 +75,11 @@ dependencies {
 
     // insets
     implementation "com.google.accompanist:accompanist-insets-ui:$accompanist_version"
+
+    // coil 图片加载
+    implementation "io.coil-kt:coil-compose:2.1.0"
+
+    // lottie 动画
+    implementation "com.airbnb.android:lottie-compose:5.0.0"
+
 }
