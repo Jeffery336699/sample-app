@@ -32,7 +32,8 @@ fun Tag(
     text: String,
     textStyle: TextStyle = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
+        fontSize = 18.sp,
+        color = Color.Red,
         letterSpacing = 0.15.sp
     ),
     backgroundColor: Color = Color(0xFFE8E8E8),
