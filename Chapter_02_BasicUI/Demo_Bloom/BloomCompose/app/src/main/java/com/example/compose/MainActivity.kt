@@ -23,6 +23,8 @@ import Layout_UI.ConstraintLayoutDemo
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -32,11 +34,23 @@ import com.example.compose.ui.HomePage
 import com.example.compose.ui.LoginPage
 import com.example.compose.ui.WelcomePage
 import com.example.compose.ui.theme.BloomTheme
+import gesture.BaseDragGestureDemo
+import gesture.ClickDemo
+import gesture.CombinedClickDemo
+import gesture.DragDemo
+import gesture.DragGestureDemo
+import gesture.DragPlayGround
+import gesture.DragToDismiss
+import gesture.SwipeableDemo
+import gesture.TapGestureDemo
+import gesture.TransformGestureDemo
+import gesture.TransformerDemo
 
 class MainActivity : AppCompatActivity() {
 
     var theme: BloomTheme by mutableStateOf(BloomTheme.LIGHT)
 
+    @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -47,7 +61,11 @@ class MainActivity : AppCompatActivity() {
             // ConstraintLayoutDemo()
             // CounterComponent()
             // IntrinsicDemo()
-            SubcompositionDemo()
+            // BaseDragGestureDemo()
+            // DragGestureDemo()
+            // TapGestureDemo()
+            // TransformGestureDemo()
+            DragToDismiss()
         }
     }
 }
