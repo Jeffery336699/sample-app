@@ -9,6 +9,8 @@ import androidx.compose.foundation.gestures.drag
 import androidx.compose.foundation.gestures.forEachGesture
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.Colors
+import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -19,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.*
 import androidx.compose.ui.input.pointer.util.VelocityTracker
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -80,14 +83,15 @@ fun DragPlayGround() {
                         )
                         coroutineScope {
                             forEachGesture {
-                                val down =  awaitPointerEventScope { awaitFirstDown() }
+                                val down = awaitPointerEventScope { awaitFirstDown() }
                                 offset.stop()
                                 awaitPointerEventScope {
                                     var validDrag: PointerInputChange?
                                     do {
-                                        validDrag = awaitTouchSlopOrCancellation(down.id) { change, _ ->
-                                            change.consumePositionChange()
-                                        }
+                                        validDrag =
+                                            awaitTouchSlopOrCancellation(down.id) { change, _ ->
+                                                change.consumePositionChange()
+                                            }
                                     } while (validDrag != null && !validDrag.positionChangeConsumed())
                                     if (validDrag != null) {
                                         val velocityTracker = VelocityTracker()
@@ -101,19 +105,33 @@ fun DragPlayGround() {
                                                     it.uptimeMillis,
                                                     it.position
                                                 )
-                                                horizontalVelocity = velocityTracker.calculateVelocity().x
-                                                verticalVelocity = velocityTracker.calculateVelocity().y
+                                                horizontalVelocity =
+                                                    velocityTracker.calculateVelocity().x
+                                                verticalVelocity =
+                                                    velocityTracker.calculateVelocity().y
                                             }
                                         }
                                         horizontalVelocity = velocityTracker.calculateVelocity().x
                                         verticalVelocity = velocityTracker.calculateVelocity().y
                                         val decay = splineBasedDecay<Offset>(this)
-                                        val targetOffset = decay.calculateTargetValue(Offset.VectorConverter, offset.value, Offset(horizontalVelocity, verticalVelocity)).run {
-                                            Offset(x.coerceIn(0f, 320.dp.toPx()), y.coerceIn(0f, 320.dp.toPx()))
-                                        }
+                                        val targetOffset = decay
+                                            .calculateTargetValue(
+                                                Offset.VectorConverter,
+                                                offset.value,
+                                                Offset(horizontalVelocity, verticalVelocity)
+                                            )
+                                            .run {
+                                                Offset(
+                                                    x.coerceIn(0f, 320.dp.toPx()),
+                                                    y.coerceIn(0f, 320.dp.toPx())
+                                                )
+                                            }
                                         dragAnimJob?.cancel()
                                         launch {
-                                            offset.animateTo(targetOffset, tween(2000, easing = LinearOutSlowInEasing))
+                                            offset.animateTo(
+                                                targetOffset,
+                                                tween(2000, easing = LinearOutSlowInEasing)
+                                            )
                                         }
                                     }
                                 }
@@ -173,4 +191,22 @@ fun DragToDismiss() {
             }
         }
     )
+}
+
+@Composable
+fun PaddingDemo(){
+    Column {
+        Row {
+            Spacer(modifier = Modifier.padding(horizontal = 12.dp))
+            Box(Modifier.size(12.dp).background(Color.Green)) {
+
+            }
+        }
+        Row {
+            Spacer(modifier = Modifier.width(24.dp))
+            Box(Modifier.size(12.dp).background(Color.Green)) {
+
+            }
+        }
+    }
 }

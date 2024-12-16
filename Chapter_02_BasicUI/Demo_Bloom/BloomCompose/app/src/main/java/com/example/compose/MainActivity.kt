@@ -34,6 +34,7 @@ import com.example.compose.ui.HomePage
 import com.example.compose.ui.LoginPage
 import com.example.compose.ui.WelcomePage
 import com.example.compose.ui.theme.BloomTheme
+import CompositionLocal.*
 import gesture.BaseDragGestureDemo
 import gesture.ClickDemo
 import gesture.CombinedClickDemo
@@ -41,6 +42,7 @@ import gesture.DragDemo
 import gesture.DragGestureDemo
 import gesture.DragPlayGround
 import gesture.DragToDismiss
+import gesture.PaddingDemo
 import gesture.SwipeableDemo
 import gesture.TapGestureDemo
 import gesture.TransformGestureDemo
@@ -50,8 +52,8 @@ class MainActivity : AppCompatActivity() {
 
     var theme: BloomTheme by mutableStateOf(BloomTheme.LIGHT)
 
-    @OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.setDecorFitsSystemWindows(false)
         super.onCreate(savedInstanceState)
         setContent {
             // WelcomePage()
@@ -65,24 +67,23 @@ class MainActivity : AppCompatActivity() {
             // DragGestureDemo()
             // TapGestureDemo()
             // TransformGestureDemo()
-            DragToDismiss()
+            // DragToDismiss()
+            // PaddingDemo()
+            CompositionLocalScreen()
         }
     }
 }
 
-@Preview
 @Composable
 fun WelcomePageLightPreview() {
     WelcomePage()
 }
 
-@Preview
 @Composable
 fun LoginPageLightPreview() {
     LoginPage()
 }
 
-@Preview
 @Composable
 fun HomePageLightPreview() {
     HomePage()

@@ -9,6 +9,7 @@ android {
     defaultConfig {
         applicationId "com.example.androiddevchallenge"
         minSdkVersion 23
+        //noinspection ExpiredTargetSdkVersion,EditedTargetSdkVersion
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
