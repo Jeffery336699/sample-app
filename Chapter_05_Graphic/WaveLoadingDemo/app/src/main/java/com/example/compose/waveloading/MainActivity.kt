@@ -41,6 +41,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+/**
+ * 通过注释、解注释大致知道api的逻辑是干啥就差不多，深层次的API细节不是我们开发者需要关注的
+ * 开发是啥，使用别人的成果快速完成自己的需求，研究才是那些科学家天才去做的事！！
+ * 一定得转换好思路
+ */
 @Preview
 @Composable
 fun WaveLoadingDemo() {

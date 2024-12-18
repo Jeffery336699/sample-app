@@ -64,18 +64,18 @@ fun WaveLoading(
     Canvas(modifier.fillMaxSize()) {
 
         // 方式一 ：使用 DrawScope API
-        // drawWave(
-        //     bitmap.asImageBitmap(),
-        //     waveConfig,
-        //     animates
-        // )
+        drawWave(
+            bitmap.asImageBitmap(),
+            waveConfig,
+            animates
+        )
 
         // 方式二：使用 Canvas API
-       drawWaveWithCanvas(
-           bitmap,
-           waveConfig,
-           animates
-       )
+       // drawWaveWithCanvas(
+       //     bitmap,
+       //     waveConfig,
+       //     animates
+       // )
     }
 
 }
@@ -88,6 +88,7 @@ private fun DrawScope.drawWave(
 ) {
 
     drawImage(image = imageBitmap, colorFilter = run {
+        // 设置成灰色
         val cm = ColorMatrix().apply { setToSaturation(0f) }
         ColorFilter.colorMatrix(cm)
     })
@@ -99,18 +100,19 @@ private fun DrawScope.drawWave(
 
         translate(-offsetX) {
             drawPath(
-                path = buildWavePath(
+                path = buildWavePath( // 实在无法理解可以从buildLinePath看看效果
                     width = maxWidth,
                     height = size.height,
                     amplitude = size.height * waveConfig.amplitude,
                     progress = waveConfig.progress
                 ), brush = ShaderBrush(ImageShader(imageBitmap).apply {
+                    // Optimize: 可以把这里注释掉然后看下效果，就会看到波浪的平移效果，此时的波浪是一个彩色的形状从左边平移过来
+                    //  解开注释：这里其实相当于实现画布在波浪曲线上平移，实现一种“取景框”内的景色移动，从而达到动画的效果
                     transform { postTranslate(offsetX, 0f) }
                 }), alpha = if (index == 0) 1f else 0.5f
             )
         }
     }
-
 }
 
 
@@ -174,7 +176,9 @@ private fun DrawScope.drawWaveWithCanvas(
 
 }
 
-
+/**
+ * 相当于与裁剪出一个底部区域，但是上部分是波浪的path，如果还是不明白可以看buildLinePath()方法
+ */
 private fun buildWavePath(
     dp: Float = 3f,
     width: Float,
@@ -204,6 +208,40 @@ private fun buildWavePath(
         }
         lineTo(width, height * (1 - progress))
         lineTo(width, height)
+        close()
+    }
+}
+
+private fun buildLinePath(
+    dp: Float = 3f,
+    width: Float,
+    height: Float,
+    amplitude: Float,
+    progress: Float
+): Path {
+
+    //调整振幅，振幅不大于剩余空间
+    var adjustHeight = min(height * Math.max(0f, 1 - progress), amplitude)
+
+    return Path().apply {
+        reset()
+        moveTo(0f, height)
+        lineTo(0f, height * (1 - progress))
+        // if (progress > 0f && progress < 1f) {
+        //     if (adjustHeight > 0) {
+        //         var x = dp
+        //         while (x < width) {
+        //             lineTo(
+        //                 x, height * (1 - progress) - adjustHeight / 2f * sin(4.0 * Math.PI * x / width)
+        //                     .toFloat()
+        //             )
+        //             x += dp
+        //         }
+        //     }
+        // }
+        lineTo(width, height * (1 - progress))
+        lineTo(width, height)
+        // path闭合，相当于最后一个点连上第一个点
         close()
     }
 }

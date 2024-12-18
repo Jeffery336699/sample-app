@@ -40,7 +40,7 @@ fun DrawBehind() {
             shape = RoundedCornerShape(8.dp)
             ,modifier = Modifier
                 .size(100.dp)
-                // 先绘制装饰物(eg小圆点),后绘制内容(eg Image)
+                // Optimize: drawBehind{}闭包里面的是在最下层——先绘制装饰物(eg小圆点),后绘制内容(内容指eg Image)
                 .drawBehind {
                     drawCircle(
                         Color(0xffe7614e),
@@ -59,6 +59,7 @@ fun DrawBehind() {
 fun DrawFuwa() {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val transition = rememberInfiniteTransition()
+        // animationSpec在动画中是一个非常重要的参数，他可以指定不同的动画类型，比如补间动画，循环动画，延迟动画等
         val alpha by transition.animateFloat(initialValue = 0f, targetValue = 1f, animationSpec = infiniteRepeatable(
             animation = tween(2000, easing = LinearEasing), repeatMode = RepeatMode.Reverse)
         )

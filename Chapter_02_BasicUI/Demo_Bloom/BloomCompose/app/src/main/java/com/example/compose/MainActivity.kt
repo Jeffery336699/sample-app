@@ -29,7 +29,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.compose.ui.HomePage
 import com.example.compose.ui.LoginPage
 import com.example.compose.ui.WelcomePage
@@ -54,6 +53,9 @@ import gesture.TapGestureDemo
 import gesture.TransformGestureDemo
 import gesture.TransformerDemo
 import kotlinx.coroutines.flow.collect
+import androidx.compose.runtime.*
+import androidx.compose.ui.tooling.preview.Preview
+import kotlinx.coroutines.delay
 
 class MainActivity : AppCompatActivity() {
 
@@ -135,3 +137,24 @@ fun SnapshotFlowExample() {
 fun DefaultPreview2() {
     SnapshotFlowExample()
 }
+
+@Composable
+fun ProduceStateExample() {
+    val loadingText: State<String> = produceState(initialValue = "Loading...",1,2) {
+        delay(2000) // 模拟网络请求延迟
+        value = "Data Loaded"
+    }
+
+    if (loadingText.value == "Loading...") {
+        Text("Loading...")
+    } else {
+        Text(loadingText.value)
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun ProduceStateExamplePreview() {
+    ProduceStateExample()
+}
+
