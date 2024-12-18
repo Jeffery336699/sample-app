@@ -18,12 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.layout.Layout
+import androidx.compose.ui.layout.Measurable
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Constraints
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
@@ -57,6 +60,23 @@ fun DrawBehind() {
 @Preview
 @Composable
 fun DrawFuwa() {
+    Layout(
+        modifier = Modifier.fillMaxSize(),
+        content = { Text(text = "Hello World") }) { measurables, constraints ->
+        // 1.执行measure操作
+        val placeable = measurables.map { measurable ->
+            measurable.measure(constraints)
+        }
+        val width = placeable.sumOf { it.measuredWidth }
+        // 2.执行layout操作
+        // Optimize: 需要给上面返回一个最终的MeasureResult,layout方法返回的结果就是一个MeasureResult
+        //  有点类似传统View体系中的onMeasure方法最后需要给上层返回自己最终的测量结果setMeasuredDimension(width, height)一样
+        layout(constraints.maxWidth, constraints.maxHeight) {
+            measurables.forEach {
+                it.measure(constraints)
+            }
+        }
+    }
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         val transition = rememberInfiniteTransition()
         // animationSpec在动画中是一个非常重要的参数，他可以指定不同的动画类型，比如补间动画，循环动画，延迟动画等
@@ -80,7 +100,7 @@ fun DrawFuwa() {
                     val niniImage = ImageBitmap.imageResource(context.resources, R.drawable.nini)
                     Log.i("Jeffery", "drawWithCache: ") // TODO: 仅仅执行一次
                     onDrawBehind {
-                    Log.i("Jeffery", "onDrawBehind: ") // TODO: 随着State变化,执行多次
+                        Log.i("Jeffery", "onDrawBehind: ") // TODO: 随着State变化,执行多次
                         drawImage(
                             image = beibeiImage,
                             dstSize = IntSize(100.dp.roundToPx(), 100.dp.roundToPx()),
