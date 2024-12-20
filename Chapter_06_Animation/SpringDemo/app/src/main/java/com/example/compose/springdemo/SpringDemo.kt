@@ -108,7 +108,7 @@ fun SpringDemoItem(name: String, offsetX: Float) {
                     .height(15.dp)
                     .background(Color.Gray)
             )
-
+            println("$name , offsetX: $offsetX")
             Box(modifier = Modifier.offset((offsetX * 185).dp)) {
                 Spacer(
                     modifier = Modifier
