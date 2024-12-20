@@ -23,7 +23,8 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     // InfinitRepetableDemo()
-                    AdvancedAnimationsScreen()
+                    // AdvancedAnimationsScreen()
+                    ContentTransformScreen()
                 }
             }
         }
