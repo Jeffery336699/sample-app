@@ -33,7 +33,8 @@ class MainActivity : ComponentActivity() {
                         // AnimationContentSizeScreen()
                         // AnimateXxAsStateScreen()
                         // AnimatableScreen()
-                        SwitchBlock()
+                        // SwitchBlock()
+                        AnimatingBoxScreen()
                     }
                 }
             }
