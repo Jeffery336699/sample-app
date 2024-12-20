@@ -2,15 +2,24 @@ package com.example.compose.infiniterepeatabledemo
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.ContentTransform
+import androidx.compose.animation.Crossfade
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.SizeTransform
+import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.keyframes
 import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.with
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.Button
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -25,11 +34,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 
-@Composable
-fun ExpandedText() {
-    val text: String = """
-                春江花月夜
+val textTemplate: String =
+    """        春江花月夜
         春江潮水连海平，海上明月共潮生。
         滟滟随波千万里，何处春江无月明！
         江流宛转绕芳甸，月照花林皆似霰。
@@ -49,7 +57,10 @@ fun ExpandedText() {
         斜月沉沉藏海雾，碣石潇湘无限路。
         不知乘月几人归，落月摇情满江树。
     """.trimIndent()
-    Text(text = text)
+
+@Composable
+fun ExpandedText() {
+    Text(text = textTemplate)
 }
 
 @Composable
@@ -106,6 +117,60 @@ fun ContentTransformScreen() {
             } else {
                 ContentIcon()
             }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+fun CrossfadeScreen() {
+    var curPage by remember {
+        mutableStateOf("A")
+    }
+    Surface(
+        onClick = { curPage = if (curPage == "A") "B" else "A" },
+        color = MaterialTheme.colors.primary,
+        modifier = Modifier.wrapContentSize()
+    ) {
+        Crossfade(targetState = curPage, modifier = Modifier.padding(20.dp)) { screen ->
+            when (screen) {
+                "A" -> Text("Page A").also {
+                    println("Page A")
+                }
+
+                "B" -> Text("Page B").also {
+                    println("Page B")
+                }
+            }
+        }
+    }
+}
+
+/**
+ * 1. 通过animateContentSize()修饰符，可以在内容大小发生变化时，自动执行动画效果。开箱即用
+ */
+@Composable
+fun AnimationContentSizeScreen() {
+    var expanded by remember {
+        mutableStateOf(false)
+    }
+    Column(Modifier.padding(16.dp)) {
+        Text(text = "Animated Content Size")
+        Spacer(modifier = Modifier.height(16.dp))
+        Button(onClick = { expanded = !expanded }) {
+            Text(if (expanded) "Shrink" else "Expand")
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        Box(modifier = Modifier
+            .background(Color.LightGray)
+            .animateContentSize()) {
+            Text(
+                text = textTemplate,
+                modifier = Modifier.padding(16.dp),
+                fontSize = 16.sp,
+                textAlign = androidx.compose.ui.text.style.TextAlign.Justify,
+                maxLines = if (expanded) Int.MAX_VALUE else 2
+            )
         }
     }
 }
